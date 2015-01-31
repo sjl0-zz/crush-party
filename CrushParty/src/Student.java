@@ -11,6 +11,13 @@ public class Student {
 
     }
 
+    /*
+     * return the score between two students.
+     */
+    public double score(Student other){
+        return 1.0;
+    }
+
     public void setIndex(int i) {
         idx = i;
     }

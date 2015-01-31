@@ -10,6 +10,7 @@ public class StudentKeeper {
 
     private Double[][] scoreMatrix;
     private Map<Integer, Student> studentMap;
+    private int numStudents = studentMap.size();
     private int nextStudentIndex = 0;
 
     /**
@@ -32,7 +33,14 @@ public class StudentKeeper {
         return new HashSet<>();
     }
 
-    public  Double[][] scores = new Double[studentMap.size()][studentMap.size()](){
+    public  Double[][] createMatrix(){
+        Double[][] matrix = new Double[numStudents][numStudents];
+        for(int i = 0; i < numStudents; i++){
+            for(int j = 0; j <= i; j++){
+                matrix[i][j] = studentMap.get(i).score(studentMap.get(j));
+            }
+        }
 
+        return matrix;
     }
 }
