@@ -33,6 +33,7 @@ public class StudentKeeper {
         return new HashSet<>();
     }
 
+    //creates a matrix of doubles representing scores between students
     public  Double[][] createMatrix(){
         Double[][] matrix = new Double[numStudents][numStudents];
         for(int i = 0; i < numStudents; i++){
