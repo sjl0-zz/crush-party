@@ -1,4 +1,5 @@
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -7,11 +8,16 @@ import java.util.Set;
  */
 public class StudentKeeper {
 
+    private Double[][] scoreMatrix;
+    private Map<Integer, Student> studentMap;
+    private int nextStudentIndex = 0;
+
     /**
      * Adds a student to the student keeper.
      */
     public void add(Student studentToAdd) {
-
+        studentMap.put(nextStudentIndex, studentToAdd);
+        studentToAdd.setIndex(nextStudentIndex++);
     }
 
     public boolean hasNext() {
