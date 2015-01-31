@@ -25,4 +25,8 @@ public class StudentKeeper {
     public Set<Student> allStudents() {
         return new HashSet<>();
     }
+
+    public  Double[][] scores = new Double[studentMap.size()][studentMap.size()](){
+
+    }
 }
