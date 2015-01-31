@@ -9,38 +9,36 @@ import java.util.Set;
 public class CrushParty {
 
     private Scanner surveyScanner;
-    //private StudentKeeper studentKeeper;
+    private StudentKeeper studentKeeper;
 
     public static void main(String args[]) {
-        CrushParty crushParty = new CrushParty(args[0]);
-        crushParty.start();
-        crushParty.readStudents();
-        crushParty.matchStudents();
+        CrushParty crushParty = new CrushParty();
+        crushParty.start(args[0]);
     }
 
-    public CrushParty(String surveyFilename) {
+    public void start(String surveyFilename) {
+        studentKeeper = new StudentKeeper();
         try {
             surveyScanner = new Scanner(new File(surveyFilename));
         } catch (FileNotFoundException e) {
             new Exception("File could not be opened.");
         }
-    }
-
-    public void start() {
-        //studentKeeper = new StudentKeeper();
+        readStudents();
+        matchStudents();
+        outputStudents();
     }
 
     public void readStudents() {
         while (surveyScanner.hasNextLine()) {
             String nextLine = surveyScanner.nextLine();
             String[] nextLineArray = nextLine.split(",");
-            //Student thisStudent = new Student(nextLineArray);
-            //studentKeeper.add(thisStudent);
+            Student thisStudent = new Student(nextLineArray);
+            studentKeeper.add(thisStudent);
         }
     }
 
     public void matchStudents() {
-        /*
+
         while (studentKeeper.hasNext()) {
             Student currStudent = studentKeeper.next();
             Set<Student> allStudents = studentKeeper.allStudents();
@@ -48,7 +46,15 @@ public class CrushParty {
                 float matchScore = score(student, currStudent);
             }
         }
-        */
+
+    }
+
+    public float score(Student studentA, Student studentB) {
+
+    }
+
+    public void outputStudents() {
+
     }
 
 }
