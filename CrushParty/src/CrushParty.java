@@ -32,7 +32,7 @@ public class CrushParty {
         while (surveyScanner.hasNextLine()) {
             String nextLine = surveyScanner.nextLine();
             String[] nextLineArray = nextLine.split(",");
-            Student thisStudent = new Student(nextLineArray);
+            Student thisStudent = new Student(nextLineArray, new Question[]{});
             studentKeeper.add(thisStudent);
         }
     }
@@ -43,14 +43,14 @@ public class CrushParty {
             Student currStudent = studentKeeper.next();
             Set<Student> allStudents = studentKeeper.allStudents();
             for (Student student : allStudents) {
-                float matchScore = score(student, currStudent);
+                double matchScore = score(student, currStudent);
             }
         }
 
     }
 
-    public float score(Student studentA, Student studentB) {
-
+    public double score(Student studentA, Student studentB) {
+        return 0.0;
     }
 
     public void outputStudents() {

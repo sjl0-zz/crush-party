@@ -1,3 +1,4 @@
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -13,19 +14,15 @@ public class StudentKeeper {
 
     }
 
-    public void hasNext() {
-
+    public boolean hasNext() {
+        return true;
     }
 
-    public void next() {
-
+    public Student next() {
+        return new Student(new String[]{}, new Question[]{});
     }
 
     public Set<Student> allStudents() {
-
-    }
-
-    public Something outputMatches() {
-
+        return new HashSet<>();
     }
 }
