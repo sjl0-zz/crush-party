@@ -7,9 +7,6 @@ import java.util.ArrayList;
 public class Student {
 
     private int idx;
-    private int[] answerScores;
-    private String[] studentInfo;
-    private String[] infoCategories;
 
     private String name;
     private Gender gender;
@@ -20,6 +17,13 @@ public class Student {
     private ArrayList<ArrayList<Student>> matches;
     private ArrayList<String> listDescriptions;
 
+
+    private int[] questionLocations = new int[]{5,6,7,8,9,14,16,17,18,19,20,21,23,22};
+
+    private int[] answerScores;
+    private String[] studentInfo;
+    private String[] infoCategories;
+
     /**
      *
      * @param studentInfo An string array representing a student's input into the Google form.
@@ -29,9 +33,14 @@ public class Student {
     public Student(String[] studentInfo, String[] infoCategories, int numQuestions) {
         this.studentInfo = studentInfo;
         this.infoCategories = infoCategories;
-        answerScores = new int[numQuestions];
-        for (int i = infoCategories.length; i < studentInfo.length; i++) {
-            answerScores[i - infoCategories.length] = CrushParty.answerScore(studentInfo[i]);
+
+        name = studentInfo[15];
+        gender = Gender.valueOf(studentInfo[4]);
+        major = studentInfo[3];
+        college = studentInfo[4];
+
+        for (int i = 0; i < questionLocations.length; i++) {
+            answerScores[i] = CrushParty.answerScore(studentInfo[questionLocations[i]]);
         }
     }
 
