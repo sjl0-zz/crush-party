@@ -10,7 +10,6 @@ public class StudentKeeper {
 
     private Double[][] scoreMatrix;
     private Map<Integer, Student> studentMap;
-    private int numStudents = studentMap.size();
     private int nextStudentIndex = 0;
 
     /**
@@ -35,6 +34,7 @@ public class StudentKeeper {
 
     //creates a matrix of doubles representing scores between students
     public  Double[][] createMatrix(){
+        int numStudents = studentMap.size();
         Double[][] matrix = new Double[numStudents][numStudents];
         for(int i = 0; i < numStudents; i++){
             for(int j = 0; j <= i; j++){
