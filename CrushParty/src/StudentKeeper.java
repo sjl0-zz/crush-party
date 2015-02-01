@@ -12,6 +12,9 @@ public class StudentKeeper {
     private Map<Integer, Student> studentMap;
     private int nextStudentIndex = 0;
 
+    public StudentKeeper() {
+    }
+
     /**
      * Adds a student to the student keeper.
      */
@@ -24,9 +27,11 @@ public class StudentKeeper {
         return true;
     }
 
+    /*
     public Student next() {
         return new Student(new String[]{}, new Question[]{});
     }
+    */
 
     public Set<Student> allStudents() {
         return new HashSet<>();
@@ -41,7 +46,6 @@ public class StudentKeeper {
                 matrix[i][j] = studentMap.get(i).score(studentMap.get(j));
             }
         }
-
         return matrix;
     }
 }
