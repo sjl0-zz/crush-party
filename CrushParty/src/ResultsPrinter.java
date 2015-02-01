@@ -3,11 +3,14 @@ import java.util.ArrayList;
 
 public class ResultsPrinter {
 
+    private static int id = 0;
+
     public static void printResults (Student person) {
 
         PrintWriter document = null;
         try {
-            document = new PrintWriter("./results/results for Nick HH.tex", "UTF-8");
+            document = new PrintWriter("./results/"
+                    + (id++) + " " + person.getName() + ".tex", "UTF-8");
         } catch (Exception e) {
             e.printStackTrace();
             throw(new RuntimeException(e));
