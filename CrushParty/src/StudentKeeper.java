@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -13,6 +14,7 @@ public class StudentKeeper {
     private int nextStudentIndex = 0;
 
     public StudentKeeper() {
+        studentMap = new HashMap<>();
     }
 
     /**
@@ -23,29 +25,14 @@ public class StudentKeeper {
         studentToAdd.setIndex(nextStudentIndex++);
     }
 
-    public boolean hasNext() {
-        return true;
-    }
-
-    /*
-    public Student next() {
-        return new Student(new String[]{}, new Question[]{});
-    }
-    */
-
-    public Set<Student> allStudents() {
-        return new HashSet<>();
-    }
-
     //creates a matrix of doubles representing scores between students
-    public  Double[][] createMatrix(){
+    public void createMatrix() {
         int numStudents = studentMap.size();
-        Double[][] matrix = new Double[numStudents][numStudents];
+        scoreMatrix = new Double[numStudents][numStudents];
         for(int i = 0; i < numStudents; i++){
             for(int j = 0; j <= i; j++){
-                matrix[i][j] = studentMap.get(i).score(studentMap.get(j));
+                scoreMatrix[i][j] = studentMap.get(i).score(studentMap.get(j));
             }
         }
-        return matrix;
     }
 }
