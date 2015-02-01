@@ -20,25 +20,6 @@ public class Student {
     private ArrayList<ArrayList<Student>> matches;
     private ArrayList<String> listDescriptions;
 
-
-    private int[] answerScores;
-    private String[] studentInfo;
-    private String[] infoCategories;
-
-    /**
-     *
-     * @param studentInfo An string array representing a student's input into the Google form.
-     * @param infoCategories Equal length list representing categories of input
-     * @param numQuestions Number of questions answered by students
-     */
-    public Student(String[] studentInfo, String[] infoCategories, int numQuestions) {
-        this.studentInfo = studentInfo;
-        this.infoCategories = infoCategories;
-        answerScores = new int[numQuestions];
-        for (int i = infoCategories.length; i < studentInfo.length; i++) {
-            answerScores[i - infoCategories.length] = CrushParty.answerScore(studentInfo[i]);
-        }
-    }
     /**
      *
      * @param studentInfo An string array representing a student's input into the Google form.
@@ -60,13 +41,6 @@ public class Student {
         matches.add(matchesIn);
         listDescriptions.add(listDescriptionIn);
 
-    }
-
-    /*
-     * return the score between two students.
-     */
-    public double score(Student other){
-        return 1.0;
     }
 
     public void setIndex(int i) {
@@ -103,12 +77,12 @@ public class Student {
 
     public static void main (String[] args) {
 
-        Student testPerson = new Student(null, null, 0);
+        Student testPerson = new Student(null, null, 100);
         testPerson.name = "Nicholas Hanson-Holtry";
         testPerson.gender = Gender.MALE;
         testPerson.year = "2016";
         testPerson.college = "Sid Rich";
-        testPerson.major = "Comp sci";
+        testPerson.major = "Comp Sci";
 
         testPerson.matches = new ArrayList<>();
         testPerson.listDescriptions = new ArrayList<>();
