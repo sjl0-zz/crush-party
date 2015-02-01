@@ -1,9 +1,20 @@
-/**
- * Created by nicholashh on 1/31/15.
- */
+
 public enum Gender {
-    MALE,
-    FEMALE,
-    NONBINARY,
-    OTHER
+
+    MALE("Male"),
+    FEMALE("Female"),
+    NONBINARY("Non-Binary"),
+    OTHER("Other");
+
+    private final String textRepresentation;
+
+    private Gender(String textRepresentation) {
+        this.textRepresentation = textRepresentation;
+    }
+
+    @Override
+    public String toString() {
+        return textRepresentation;
+    }
+
 }
