@@ -47,10 +47,10 @@ public class ResultsPrinter {
         writeOneTable(document, person, "List 3", 2);
         document.println("\\newpage");
         document.println("\\section*{Worst Results}");
+        document.println("");
         writeOneTable(document, person, "List 1", 3);
         writeOneTable(document, person, "List 2", 4);
         writeOneTable(document, person, "List 3", 5);
-        document.println("");
         document.println("\\end{document}");
 
         document.close();
@@ -71,7 +71,10 @@ public class ResultsPrinter {
         document.println("    Name & Gender & Year & College & Major \\\\");
         document.println("    \\hline");
         for (int i = 1; i <= 10; i++) {
-            document.println("    " + i + ". " + matches.get(i-1) + " & & & & \\\\");
+            Student match = matches.get(i - 1);
+            document.println("    " + i + ". " + match.getName() + " & " +
+                    match.getGender() + " & " + match.getYear() + " & " +
+                    match.getCollege() + " & " + match.getMajor() + " \\\\");
         }
         document.println("    \\hline");
         document.println("\\end{tabular}");
