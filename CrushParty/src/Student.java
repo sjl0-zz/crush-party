@@ -11,11 +11,16 @@ public class Student {
 
     }
 
-    /*
-     * return the score between two students.
-     */
+
+    // return the score between two students.
+
     public double score(Student other){
-        return 1.0;
+        double score = 0.0;
+
+
+        // add to score based on distance from other
+
+        return score;
     }
 
     public void setIndex(int i) {
