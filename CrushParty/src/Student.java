@@ -20,8 +20,24 @@ public class Student {
     private ArrayList<ArrayList<Student>> matches;
     private ArrayList<String> listDescriptions;
 
-    public Student(String[] studentInfo, Question[] questions) {
-        // set name, gender, etc
+
+    private int[] answerScores;
+    private String[] studentInfo;
+    private String[] infoCategories;
+
+    /**
+     *
+     * @param studentInfo An string array representing a student's input into the Google form.
+     * @param infoCategories Equal length list representing categories of input
+     * @param numQuestions Number of questions answered by students
+     */
+    public Student(String[] studentInfo, String[] infoCategories, int numQuestions) {
+        this.studentInfo = studentInfo;
+        this.infoCategories = infoCategories;
+        answerScores = new int[numQuestions];
+        for (int i = infoCategories.length; i < studentInfo.length; i++) {
+            answerScores[i - infoCategories.length] = CrushParty.answerScore(studentInfo[i]);
+        }
     }
     /**
      *
@@ -87,7 +103,7 @@ public class Student {
 
     public static void main (String[] args) {
 
-        Student testPerson = new Student(null, null);
+        Student testPerson = new Student(null, null, 0);
         testPerson.name = "Nicholas Hanson-Holtry";
         testPerson.gender = Gender.MALE;
         testPerson.year = "2016";
@@ -108,6 +124,19 @@ public class Student {
 
         System.out.println("done!");
 
+    }
+
+    public double score(Student other) {
+        double ans = 1.0;
+        int[] otherAnswers = other.getAnswerScores();
+        for (int i = 0; i < otherAnswers.length; i++) {
+            ans += Math.pow((otherAnswers[i] - answerScores[i]), 2);
+        }
+        return Math.sqrt(ans);
+    }
+
+    public int[] getAnswerScores() {
+        return answerScores;
     }
 
 }
