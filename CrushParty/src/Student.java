@@ -17,7 +17,6 @@ public class Student {
     private ArrayList<ArrayList<Student>> matches;
     private ArrayList<String> listDescriptions;
 
-
     private int[] questionLocations = new int[]{5,6,7,8,9,14,16,17,18,19,20,21,23,22};
 
     private int[] answerScores;
@@ -33,14 +32,15 @@ public class Student {
     public Student(String[] studentInfo, String[] infoCategories, int numQuestions) {
         this.studentInfo = studentInfo;
         this.infoCategories = infoCategories;
+        this.answerScores = new int[questionLocations.length];
 
-        name = studentInfo[15];
-        gender = Gender.valueOf(studentInfo[4]);
-        major = studentInfo[3];
-        college = studentInfo[4];
+        name = studentInfo[16];
+        gender = Gender.valueOf(studentInfo[1].toUpperCase().replaceAll("-", ""));
+        major = studentInfo[4];
+        college = studentInfo[5];
 
         for (int i = 0; i < questionLocations.length; i++) {
-            answerScores[i] = CrushParty.answerScore(studentInfo[questionLocations[i]]);
+            answerScores[i] = CrushParty.answerScore(studentInfo[questionLocations[i] + 1]);
         }
     }
 
@@ -84,6 +84,7 @@ public class Student {
         return major;
     }
 
+    /*
     public static void main (String[] args) {
 
         Student testPerson = new Student(null, null, 0);
@@ -108,6 +109,7 @@ public class Student {
         System.out.println("done!");
 
     }
+    */
 
     public double score(Student other) {
         double ans = 1.0;

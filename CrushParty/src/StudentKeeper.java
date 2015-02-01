@@ -34,5 +34,6 @@ public class StudentKeeper {
                 scoreMatrix[i][j] = studentMap.get(i).score(studentMap.get(j));
             }
         }
+        System.out.println();
     }
 }
