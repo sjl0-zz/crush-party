@@ -15,6 +15,7 @@ public class Student {
     private String major;
 
     private ArrayList<ArrayList<Student>> matches;
+    private ArrayList<ArrayList<Double>> percentages;
     private ArrayList<String> listDescriptions;
 
 
@@ -60,6 +61,10 @@ public class Student {
         return matches.get(index);
     }
 
+    public ArrayList<Double> getPercentagesForList (int index) {
+        return percentages.get(index);
+    }
+
     public String getDescriptionForList (int index) {
         return listDescriptions.get(index);
     }
@@ -94,11 +99,14 @@ public class Student {
         testPerson.major = "Comp Sci";
 
         testPerson.matches = new ArrayList<>();
+        testPerson.percentages = new ArrayList<>();
         testPerson.listDescriptions = new ArrayList<>();
         for (int j = 0; j < 6; j++) {
             testPerson.matches.add(new ArrayList<>());
+            testPerson.percentages.add(new ArrayList<>());
             for (int i = 0; i < 10; i++) {
                 testPerson.matches.get(j).add(testPerson);
+                testPerson.percentages.get(j).add(0.5);
             }
             testPerson.listDescriptions.add("description " + j);
         }

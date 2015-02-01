@@ -69,15 +69,16 @@ public class ResultsPrinter {
         document.println("");
         document.println(person.getDescriptionForList(index) + " \\\\");
         document.println("");
-        document.println("\\begin{tabular}{| l | l | l | l | l |}");
+        document.println("\\begin{tabular}{| l | l | l | l | l | l |}");
         document.println("    \\hline");
-        document.println("    Name & Gender & Year & College & Major \\\\");
+        document.println("    Name & Match & Gender & Year & College & Major \\\\");
         document.println("    \\hline");
-        for (int i = 1; i <= 10; i++) {
-            Student match = matches.get(i - 1);
-            document.println("    " + i + ". " + match.getName() + " & " +
-                    match.getGender() + " & " + match.getYear() + " & " +
-                    match.getCollege() + " & " + match.getMajor() + " \\\\");
+        for (int i = 0; i < 10; i++) {
+            Student match = matches.get(i);
+            document.println("    " + i + ". " + match.getName() + " & "
+                    + person.getPercentagesForList(index).get(i) * 100 + "\\% & "
+                    + match.getGender() + " & " + match.getYear() + " & "
+                    + match.getCollege() + " & " + match.getMajor() + " \\\\");
         }
         document.println("    \\hline");
         document.println("\\end{tabular}");
