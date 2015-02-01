@@ -77,15 +77,6 @@ public class Student {
         return major;
     }
 
-    public double score(Student other){
-        double score = 0.0;
-
-
-
-
-        return score;
-    }
-
     public static void main (String[] args) {
 
         Student testPerson = new Student(null, null, 0);
