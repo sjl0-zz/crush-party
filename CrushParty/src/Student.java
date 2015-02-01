@@ -15,7 +15,9 @@ public class Student {
     private String major;
 
     private ArrayList<ArrayList<Student>> matches;
+    private ArrayList<ArrayList<Double>> percentages;
     private ArrayList<String> listDescriptions;
+
 
     private int[] questionLocations = new int[]{5,6,7,8,9,14,16,17,18,19,20,21,23,22};
 
@@ -60,6 +62,10 @@ public class Student {
         return matches.get(index);
     }
 
+    public ArrayList<Double> getPercentagesForList (int index) {
+        return percentages.get(index);
+    }
+
     public String getDescriptionForList (int index) {
         return listDescriptions.get(index);
     }
@@ -87,19 +93,22 @@ public class Student {
     /*
     public static void main (String[] args) {
 
-        Student testPerson = new Student(null, null, 0);
+        Student testPerson = new Student(null, null, 100);
         testPerson.name = "Nicholas Hanson-Holtry";
         testPerson.gender = Gender.MALE;
         testPerson.year = "2016";
         testPerson.college = "Sid Rich";
-        testPerson.major = "Comp sci";
+        testPerson.major = "Comp Sci";
 
         testPerson.matches = new ArrayList<>();
+        testPerson.percentages = new ArrayList<>();
         testPerson.listDescriptions = new ArrayList<>();
         for (int j = 0; j < 6; j++) {
             testPerson.matches.add(new ArrayList<>());
+            testPerson.percentages.add(new ArrayList<>());
             for (int i = 0; i < 10; i++) {
                 testPerson.matches.get(j).add(testPerson);
+                testPerson.percentages.get(j).add(0.5);
             }
             testPerson.listDescriptions.add("description " + j);
         }

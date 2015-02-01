@@ -3,11 +3,14 @@ import java.util.ArrayList;
 
 public class ResultsPrinter {
 
+    private static int id = 0;
+
     public static void printResults (Student person) {
 
         PrintWriter document = null;
         try {
-            document = new PrintWriter("./results/results for Nick HH.tex", "UTF-8");
+            document = new PrintWriter("./results/"
+                    + (id++) + " " + person.getName() + ".tex", "UTF-8");
         } catch (Exception e) {
             e.printStackTrace();
             throw(new RuntimeException(e));
@@ -66,15 +69,16 @@ public class ResultsPrinter {
         document.println("");
         document.println(person.getDescriptionForList(index) + " \\\\");
         document.println("");
-        document.println("\\begin{tabular}{| l | l | l | l | l |}");
+        document.println("\\begin{tabular}{| l | l | l | l | l | l |}");
         document.println("    \\hline");
-        document.println("    Name & Gender & Year & College & Major \\\\");
+        document.println("    Name & Match & Gender & Year & College & Major \\\\");
         document.println("    \\hline");
-        for (int i = 1; i <= 10; i++) {
-            Student match = matches.get(i - 1);
-            document.println("    " + i + ". " + match.getName() + " & " +
-                    match.getGender() + " & " + match.getYear() + " & " +
-                    match.getCollege() + " & " + match.getMajor() + " \\\\");
+        for (int i = 0; i < 10; i++) {
+            Student match = matches.get(i);
+            document.println("    " + i + ". " + match.getName() + " & "
+                    + person.getPercentagesForList(index).get(i) * 100 + "\\% & "
+                    + match.getGender() + " & " + match.getYear() + " & "
+                    + match.getCollege() + " & " + match.getMajor() + " \\\\");
         }
         document.println("    \\hline");
         document.println("\\end{tabular}");
