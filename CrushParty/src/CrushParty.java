@@ -64,23 +64,15 @@ public class CrushParty {
     }
 
     public void matchStudents() {
+        studentKeeper.createMatrix();
+    }
 
-        while (studentKeeper.hasNext()) {
-            //Student currStudent = studentKeeper.next();
-            Set<Student> allStudents = studentKeeper.allStudents();
-            for (Student student : allStudents) {
-            }
-        }
+    public void outputStudents() {
 
     }
 
     public static int answerScore(String answer) {
         return answerMap.get(answer);
-    }
-
-
-    public void outputStudents() {
-
     }
 
 }
