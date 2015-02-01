@@ -66,7 +66,7 @@ public class CrushParty {
     public void matchStudents() {
 
         while (studentKeeper.hasNext()) {
-            Student currStudent = studentKeeper.next();
+            //Student currStudent = studentKeeper.next();
             Set<Student> allStudents = studentKeeper.allStudents();
             for (Student student : allStudents) {
             }

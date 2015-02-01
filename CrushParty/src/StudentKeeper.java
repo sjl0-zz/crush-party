@@ -27,9 +27,11 @@ public class StudentKeeper {
         return true;
     }
 
+    /*
     public Student next() {
         return new Student(new String[]{}, new Question[]{});
     }
+    */
 
     public Set<Student> allStudents() {
         return new HashSet<>();
