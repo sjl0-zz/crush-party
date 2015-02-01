@@ -79,7 +79,7 @@ public class Student {
 
     public static void main (String[] args) {
 
-        Student testPerson = new Student(null, null);
+        Student testPerson = new Student(null, null, 0);
         testPerson.name = "Nicholas Hanson-Holtry";
         testPerson.gender = Gender.MALE;
         testPerson.year = "2016";
