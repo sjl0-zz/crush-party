@@ -14,7 +14,6 @@ public class CrushParty {
     private static Map<String, Integer> answerMap;
     private StudentKeeper studentKeeper;
     private int n;
-    private Gender m = Gender.MALE;
 
     /**
      * Usage:
@@ -38,18 +37,25 @@ public class CrushParty {
         File surveyFile = new File(surveyFilename);
         File answerFile = new File(answersFilename);
 
-
-
         try {
             surveyScanner = new BufferedReader(new FileReader(surveyFilename));
-            answerScanner = new BufferedReader(new FileReader(answersFilename));
+            System.out.println("successfully made surveyScanner for " + surveyFilename);
         } catch (FileNotFoundException e) {
-            new Exception("File could not be opened.");
+            throw new RuntimeException("File '"+surveyFilename+"' could not be opened.");
         }
+
+        try {
+            answerScanner = new BufferedReader(new FileReader(answersFilename));
+            System.out.println("successfully made answerScanner for " + answersFilename);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("File '"+answersFilename+"' could not be opened.");
+        }
+
         processAnswers();
         readStudents();
         matchStudents();
         outputStudents();
+
     }
 
     public void processAnswers() {
@@ -63,7 +69,6 @@ public class CrushParty {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(answerMap);
     }
 
     public void readStudents() {
@@ -84,16 +89,11 @@ public class CrushParty {
     }
 
     public void outputStudents() {
-        studentKeeper.output();
+
     }
 
     public static int answerScore(String answer) {
-        try {
-            return answerMap.get(answer);
-        } catch (Exception e) {
-            System.err.println(answer);
-            throw e;
-        }
+        return answerMap.get(answer);
     }
 
 }
