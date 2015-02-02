@@ -12,7 +12,7 @@ public class NullPriorityNode extends PriorityNode {
         PriorityNode start = new NullPriorityNode();
         int i = len - 1;
         while (i-- > 0) {
-            start = start.addNext(new NullPriorityNode());
+            start = start.insert(new NullPriorityNode());
         }
         return start;
     }

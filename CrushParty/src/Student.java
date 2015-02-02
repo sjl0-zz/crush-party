@@ -145,7 +145,7 @@ public class Student {
     }
 
     public void addMatch(Student match, double score) {
-        bestMatches = bestMatches.addNext(new PriorityNode(match, score));
+        bestMatches = bestMatches.insert(new PriorityNode(match, score));
     }
 
     public void prepareForPrinting() {

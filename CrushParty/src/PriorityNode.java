@@ -42,19 +42,6 @@ public class PriorityNode {
         this.next = next;
     }
 
-    public PriorityNode addNext(PriorityNode nodeToAdd) {
-        if (next == null) {
-            next = nodeToAdd;
-            return this;
-        } else if (next.getScore() > nodeToAdd.score) {
-            next = next.addNext(nodeToAdd);
-            return this;
-        } else {
-            nodeToAdd.setNext(this);
-            return nodeToAdd;
-        }
-    }
-
     public PriorityNode insert(PriorityNode nodeToAdd) {
         if (nodeToAdd.getScore() > score) {
             nodeToAdd.setNext(this);
