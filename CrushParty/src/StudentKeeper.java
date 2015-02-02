@@ -31,9 +31,16 @@ public class StudentKeeper {
         scoreMatrix = new Double[numStudents][numStudents];
         for(int i = 0; i < numStudents; i++){
             for(int j = 0; j <= i; j++){
-                scoreMatrix[i][j] = studentMap.get(i).score(studentMap.get(j));
+                Student studentI = studentMap.get(i);
+                Student studentJ = studentMap.get(j);
+                double scoreIJ = studentI.score(studentJ);
+                studentI.addMatch(studentJ, scoreIJ);
+                studentI.addMatch(studentJ, scoreIJ);
+                scoreMatrix[i][j] = scoreIJ;
+                scoreMatrix[j][i] = scoreIJ;
             }
         }
         System.out.println();
     }
+
 }

@@ -14,6 +14,16 @@ public class Student {
     private String college;
     private String major;
 
+    /**
+     * Array of priority queues representing matches.
+     */
+    private PriorityNode bestMatches;
+
+    /**
+     * List of length 6 representing the 6 output lists (3 best, 3 worst)
+     * Each inner list is of len 10 representing matches. If not 10, then
+     * have a "null" student?
+     */
     private ArrayList<ArrayList<Student>> matches;
     private ArrayList<ArrayList<Double>> percentages;
     private ArrayList<String> listDescriptions;
@@ -44,6 +54,7 @@ public class Student {
         for (int i = 0; i < questionLocations.length; i++) {
             answerScores[i] = CrushParty.answerScore(studentInfo[questionLocations[i] + 1]);
         }
+        bestMatches = NullPriorityNode.initList(10);
     }
 
     // should be called 6 times (3 best 3 worst, in that order)
@@ -132,5 +143,10 @@ public class Student {
     public int[] getAnswerScores() {
         return answerScores;
     }
+
+    public void addMatch(Student match, double score) {
+        bestMatches.addNext(new PriorityNode(match, score));
+    }
+
 
 }
