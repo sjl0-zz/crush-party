@@ -35,14 +35,15 @@ public class Student {
         this.studentInfo = studentInfo;
         this.infoCategories = infoCategories;
 
-//        name = studentInfo[15];
-//        gender = Gender.valueOf(studentInfo[4]);
-//        major = studentInfo[3];
-//        college = studentInfo[4];
-//
-//        for (int i = 0; i < questionLocations.length; i++) {
-//            answerScores[i] = CrushParty.answerScore(studentInfo[questionLocations[i]]);
-//        }
+        name = studentInfo[15];
+        gender = Gender.valueOf(studentInfo[4]);
+        major = studentInfo[3];
+        college = studentInfo[4];
+
+        for (int i = 0; i < questionLocations.length; i++) {
+            answerScores[i] = CrushParty.answerScore(studentInfo[questionLocations[i]]);
+        }
+
     }
 
     // should be called 6 times (3 best 3 worst, in that order)
