@@ -5,6 +5,7 @@ public class PriorityNode {
     private Student student;
     private double score;
     private PriorityNode next;
+    private PriorityNode prev;
 
     public PriorityNode() {}
 
@@ -41,14 +42,56 @@ public class PriorityNode {
         this.next = next;
     }
 
-    public void addNext(PriorityNode nodeToAdd) {
+    public PriorityNode addNext(PriorityNode nodeToAdd) {
         if (next == null) {
             next = nodeToAdd;
-        } else if (nodeToAdd.next.getScore() > this.score) {
-            next.addNext(nodeToAdd);
+            return this;
+        } else if (next.getScore() > nodeToAdd.score) {
+            next = next.addNext(nodeToAdd);
+            return this;
         } else {
             nodeToAdd.setNext(this);
+            return nodeToAdd;
         }
     }
 
+    public PriorityNode insert(PriorityNode nodeToAdd) {
+        if (nodeToAdd.getScore() > score) {
+
+        } else {
+            if (hasNext()) {
+
+            } else {
+                this.next = nodeToAdd;
+                nodeToAdd.setPrev(this);
+            }
+        }
+        return new NullPriorityNode();
+    }
+
+    public PriorityNode remove() {
+        if (hasNext()) {
+            this.next.setPrev(prev);
+        }
+        if (hasPrev()) {
+            this.prev.setNext(next);
+        }
+        return this;
+    }
+
+    public boolean hasPrev() {
+        return !(prev == null);
+    }
+
+    public PriorityNode getNext() {
+        return next;
+    }
+
+    public PriorityNode getPrev() {
+        return prev;
+    }
+
+    public void setPrev(PriorityNode prev) {
+        this.prev = prev;
+    }
 }

@@ -84,7 +84,7 @@ public class CrushParty {
     }
 
     public void outputStudents() {
-
+        studentKeeper.output();
     }
 
     public static int answerScore(String answer) {
