@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Seth on 1/24/15.
@@ -13,6 +15,7 @@ public class Student {
     private String year;
     private String college;
     private String major;
+    private Set<String> interests;
 
     /**
      * Array of priority queues representing matches.
@@ -34,6 +37,9 @@ public class Student {
     private int[] answerScores;
     private String[] studentInfo;
     private String[] infoCategories;
+
+    public Student() {
+    }
 
     /**
      *
@@ -150,6 +156,53 @@ public class Student {
 
     public void prepareForPrinting() {
 
+    }
+
+    public List<List<Student>> getTop10(Set<Gender> acceptableGenders, Set<String> requiredInterests) {
+        List<Student> topStudents = new ArrayList<>();
+        List<Student> bottomStudents = new ArrayList<>();
+        PriorityNode head = bestMatches.next();
+        int headCount = 0;
+        int tailCount = 0;
+        PriorityNode tail = bestMatches.getPrev();
+
+        while (!(head instanceof NullPriorityNode) && headCount < 10) {
+            Student possible = head.getStudent();
+            if (possible.isFeasible(acceptableGenders, requiredInterests)) {
+                topStudents.add(possible);
+                headCount++;
+            }
+            head = head.next();
+        }
+        while (!(tail instanceof NullPriorityNode) && tailCount < 10) {
+            Student possible = tail.getStudent();
+            if (possible.isFeasible(acceptableGenders, requiredInterests)) {
+                bottomStudents.add(possible);
+                headCount++;
+            }
+            tail = tail.getPrev();
+        }
+
+        while (headCount < 10) {
+            topStudents.add(new NullStudent());
+        }
+
+        while (tailCount < 10) {
+            bottomStudents.add(new NullStudent());
+        }
+
+        listDescriptions.add("Best" + acceptableGenders.toString() + " " + requiredInterests.toString());
+        listDescriptions.add("Worst" + acceptableGenders.toString() + " " + requiredInterests.toString());
+
+        List<List<Student>> retList = new ArrayList<>();
+        retList.add(topStudents);
+        retList.add(bottomStudents);
+        return retList;
+
+    }
+
+    public boolean isFeasible(Set<Gender> acceptableGenders, Set<String> requiredInterests) {
+        return acceptableGenders.contains(this.gender) && this.interests.containsAll(requiredInterests);
     }
 
 
