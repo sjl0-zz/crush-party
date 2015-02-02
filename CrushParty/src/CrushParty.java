@@ -1,5 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -10,11 +9,12 @@ import java.util.Set;
  */
 public class CrushParty {
 
-    private Scanner surveyScanner;
-    private Scanner answerScanner;
+    private BufferedReader surveyScanner;
+    private BufferedReader answerScanner;
     private static Map<String, Integer> answerMap;
     private StudentKeeper studentKeeper;
     private int n;
+    private Gender m = Gender.MALE;
 
     /**
      * Usage:
@@ -28,16 +28,21 @@ public class CrushParty {
      */
     public static void main(String args[]) {
         CrushParty crushParty = new CrushParty();
-        crushParty.start(args[0], args[1], args[2]);
+        crushParty.start(args[0], args[1]);
     }
 
-    public void start(String surveyFilename, String answersFilename, String numQuestions) {
+    public void start(String surveyFilename, String answersFilename) {
         studentKeeper = new StudentKeeper();
         answerMap = new HashMap<>();
-        n = Integer.valueOf(numQuestions);
+        //n = Integer.valueOf(numQuestions);
+        File surveyFile = new File(surveyFilename);
+        File answerFile = new File(answersFilename);
+
+
+
         try {
-            surveyScanner = new Scanner(new File(surveyFilename));
-            answerScanner = new Scanner(new File(answersFilename));
+            surveyScanner = new BufferedReader(new FileReader(surveyFilename));
+            answerScanner = new BufferedReader(new FileReader(answersFilename));
         } catch (FileNotFoundException e) {
             new Exception("File could not be opened.");
         }
@@ -48,18 +53,29 @@ public class CrushParty {
     }
 
     public void processAnswers() {
-        while (answerScanner.hasNextLine()) {
-            String[] answerString = answerScanner.nextLine().split(",");
-            answerMap.put(answerString[0], Integer.valueOf(answerString[1]));
+        try {
+            while (answerScanner.ready()) {
+                String[] nextLine = answerScanner.readLine().split(",");
+                String answerStringA = nextLine[0].trim();
+                String answerStringB = nextLine[1];
+                answerMap.put(answerStringA, Integer.valueOf(answerStringB));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        System.out.println(answerMap);
     }
 
     public void readStudents() {
-        while (surveyScanner.hasNextLine()) {
-            String nextLine = surveyScanner.nextLine();
-            String[] nextLineArray = nextLine.split(",");
-            Student thisStudent = new Student(nextLineArray, new String[]{"FN", "..."}, n);
-            studentKeeper.add(thisStudent);
+        try {
+            while (surveyScanner.ready()) {
+                String nextLine = surveyScanner.readLine();
+                String[] nextLineArray = nextLine.split("\t");
+                Student thisStudent = new Student(nextLineArray, new String[]{"FN", "..."}, n);
+                studentKeeper.add(thisStudent);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -68,11 +84,16 @@ public class CrushParty {
     }
 
     public void outputStudents() {
-
+        studentKeeper.output();
     }
 
     public static int answerScore(String answer) {
-        return answerMap.get(answer);
+        try {
+            return answerMap.get(answer);
+        } catch (Exception e) {
+            System.err.println(answer);
+            throw e;
+        }
     }
 
 }

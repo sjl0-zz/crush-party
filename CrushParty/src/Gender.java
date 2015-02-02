@@ -1,6 +1,4 @@
-
 public enum Gender {
-
     MALE("Male"),
     FEMALE("Female"),
     NONBINARY("Non-Binary"),
@@ -8,12 +6,11 @@ public enum Gender {
 
     private final String textRepresentation;
 
-    private Gender(String textRepresentation) {
+    Gender(String textRepresentation) {
         this.textRepresentation = textRepresentation;
     }
 
-    @Override
-    public String toString() {
+    public String getTextRepresentation() {
         return textRepresentation;
     }
 

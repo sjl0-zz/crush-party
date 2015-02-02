@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Seth on 1/24/15.
@@ -13,7 +15,18 @@ public class Student {
     private String year;
     private String college;
     private String major;
+    private Set<String> interests;
 
+    /**
+     * Array of priority queues representing matches.
+     */
+    private PriorityNode bestMatches;
+
+    /**
+     * List of length 6 representing the 6 output lists (3 best, 3 worst)
+     * Each inner list is of len 10 representing matches. If not 10, then
+     * have a "null" student?
+     */
     private ArrayList<ArrayList<Student>> matches;
     private ArrayList<ArrayList<Double>> percentages;
     private ArrayList<String> listDescriptions;
@@ -25,6 +38,9 @@ public class Student {
     private String[] studentInfo;
     private String[] infoCategories;
 
+    public Student() {
+    }
+
     /**
      *
      * @param studentInfo An string array representing a student's input into the Google form.
@@ -34,16 +50,17 @@ public class Student {
     public Student(String[] studentInfo, String[] infoCategories, int numQuestions) {
         this.studentInfo = studentInfo;
         this.infoCategories = infoCategories;
+        this.answerScores = new int[questionLocations.length];
 
-        name = studentInfo[15];
-        gender = Gender.valueOf(studentInfo[4]);
-        major = studentInfo[3];
-        college = studentInfo[4];
+        name = studentInfo[16];
+        gender = Gender.valueOf(studentInfo[1].toUpperCase().replaceAll("-", ""));
+        major = studentInfo[4];
+        college = studentInfo[5];
 
         for (int i = 0; i < questionLocations.length; i++) {
-            answerScores[i] = CrushParty.answerScore(studentInfo[questionLocations[i]]);
+            answerScores[i] = CrushParty.answerScore(studentInfo[questionLocations[i] + 1]);
         }
-
+        bestMatches = NullPriorityNode.initList(10);
     }
 
     // should be called 6 times (3 best 3 worst, in that order)
@@ -90,6 +107,7 @@ public class Student {
         return major;
     }
 
+    /*
     public static void main (String[] args) {
 
         Student testPerson = new Student(null, null, 100);
@@ -117,6 +135,7 @@ public class Student {
         System.out.println("done!");
 
     }
+    */
 
     public double score(Student other) {
         double ans = 1.0;
@@ -130,5 +149,61 @@ public class Student {
     public int[] getAnswerScores() {
         return answerScores;
     }
+
+    public void addMatch(Student match, double score) {
+        bestMatches = bestMatches.insert(new PriorityNode(match, score));
+    }
+
+    public void prepareForPrinting() {
+
+    }
+
+    public List<List<Student>> getTop10(Set<Gender> acceptableGenders, Set<String> requiredInterests) {
+        List<Student> topStudents = new ArrayList<>();
+        List<Student> bottomStudents = new ArrayList<>();
+        PriorityNode head = bestMatches.next();
+        int headCount = 0;
+        int tailCount = 0;
+        PriorityNode tail = bestMatches.getPrev();
+
+        while (!(head instanceof NullPriorityNode) && headCount < 10) {
+            Student possible = head.getStudent();
+            if (possible.isFeasible(acceptableGenders, requiredInterests)) {
+                topStudents.add(possible);
+                headCount++;
+            }
+            head = head.next();
+        }
+        while (!(tail instanceof NullPriorityNode) && tailCount < 10) {
+            Student possible = tail.getStudent();
+            if (possible.isFeasible(acceptableGenders, requiredInterests)) {
+                bottomStudents.add(possible);
+                headCount++;
+            }
+            tail = tail.getPrev();
+        }
+
+        while (headCount < 10) {
+            topStudents.add(new NullStudent());
+        }
+
+        while (tailCount < 10) {
+            bottomStudents.add(new NullStudent());
+        }
+
+        listDescriptions.add("Best" + acceptableGenders.toString() + " " + requiredInterests.toString());
+        listDescriptions.add("Worst" + acceptableGenders.toString() + " " + requiredInterests.toString());
+
+        List<List<Student>> retList = new ArrayList<>();
+        retList.add(topStudents);
+        retList.add(bottomStudents);
+        return retList;
+
+    }
+
+    public boolean isFeasible(Set<Gender> acceptableGenders, Set<String> requiredInterests) {
+        return acceptableGenders.contains(this.gender) && this.interests.containsAll(requiredInterests);
+    }
+
 
 }
