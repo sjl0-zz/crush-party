@@ -52,10 +52,24 @@ public class Student {
         this.infoCategories = infoCategories;
         this.answerScores = new int[questionLocations.length];
 
+        System.out.println("creating new student...");
+
+//        System.out.println("studentInfo =");
+//        for (int i = 0; i < studentInfo.length; i++) {
+//            System.out.printf("\t%2d: %s\n", i, studentInfo[i]);
+//        }
+
         name = studentInfo[16];
         gender = Gender.valueOf(studentInfo[1].toUpperCase().replaceAll("-", ""));
-        major = studentInfo[4];
+        year = studentInfo[32];
         college = studentInfo[5];
+        major = studentInfo[4];
+
+        System.out.println("    name = " + name);
+        System.out.println("    gender = " + gender);
+        System.out.println("    year = " + year);
+        System.out.println("    college = " + college);
+        System.out.println("    major = " + major);
 
         for (int i = 0; i < questionLocations.length; i++) {
             answerScores[i] = CrushParty.answerScore(studentInfo[questionLocations[i] + 1]);
