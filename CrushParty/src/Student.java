@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Seth on 1/24/15.
@@ -15,7 +13,7 @@ public class Student {
     private String year;
     private String college;
     private String major;
-    private Set<String> interests;
+    private Map<Gender, Set<String>> interests;
 
     /**
      * Array of priority queues representing matches.
@@ -75,6 +73,7 @@ public class Student {
             answerScores[i] = CrushParty.answerScore(studentInfo[questionLocations[i] + 1]);
         }
         bestMatches = NullPriorityNode.initList(10);
+        this.interests = new HashMap<>();
     }
 
     // should be called 6 times (3 best 3 worst, in that order)
@@ -182,7 +181,7 @@ public class Student {
 
         while (!(head instanceof NullPriorityNode) && headCount < 10) {
             Student possible = head.getStudent();
-            if (possible.isFeasible(acceptableGenders, requiredInterests)) {
+            if (possible.isFeasible(acceptableGenders, requiredInterests, getGender())) {
                 topStudents.add(possible);
                 headCount++;
             }
@@ -190,7 +189,7 @@ public class Student {
         }
         while (!(tail instanceof NullPriorityNode) && tailCount < 10) {
             Student possible = tail.getStudent();
-            if (possible.isFeasible(acceptableGenders, requiredInterests)) {
+            if (possible.isFeasible(acceptableGenders, requiredInterests, getGender())) {
                 bottomStudents.add(possible);
                 headCount++;
             }
@@ -215,8 +214,16 @@ public class Student {
 
     }
 
-    public boolean isFeasible(Set<Gender> acceptableGenders, Set<String> requiredInterests) {
-        return acceptableGenders.contains(this.gender) && this.interests.containsAll(requiredInterests);
+    /**
+     * Checks feasibility of a match based on indicated interests.
+     * @param acceptableGenders Set of genders that potential match is interested in
+     * @param requiredInterests Set of interests that potential match is interested in
+     * @param potentialGender Gender Identity of potential match
+     * @return true if current student identifies as an acceptable gender and is interested in doing
+     *          all of the required interests with the
+     */
+    public boolean isFeasible(Set<Gender> acceptableGenders, Set<String> requiredInterests, Gender potentialGender) {
+        return acceptableGenders.contains(this.gender) && this.interests.get(potentialGender).contains(requiredInterests);
     }
 
 
