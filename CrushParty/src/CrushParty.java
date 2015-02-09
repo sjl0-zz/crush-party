@@ -69,6 +69,8 @@ public class CrushParty {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // NullStudents have no answers, worth max points
+        answerMap.put("", Integer.MAX_VALUE);
     }
 
     public void readStudents() {
@@ -76,7 +78,7 @@ public class CrushParty {
             while (surveyScanner.ready()) {
                 String nextLine = surveyScanner.readLine();
                 String[] nextLineArray = nextLine.split("\t");
-                Student thisStudent = new Student(nextLineArray, new String[]{"FN", "..."}, n);
+                Student thisStudent = new Student(nextLineArray);
                 studentKeeper.add(thisStudent);
             }
         } catch (IOException e) {
@@ -89,11 +91,17 @@ public class CrushParty {
     }
 
     public void outputStudents() {
-
+        studentKeeper.output();
     }
 
     public static int answerScore(String answer) {
-        return answerMap.get(answer);
+        try {
+            return answerMap.get(answer);
+        } catch (Exception e) {
+            System.err.println(answerMap);
+            System.err.println(answer);
+            throw e;
+        }
     }
 
 }

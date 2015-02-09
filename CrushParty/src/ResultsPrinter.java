@@ -1,5 +1,5 @@
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.List;
 
 public class ResultsPrinter {
 
@@ -63,7 +63,7 @@ public class ResultsPrinter {
     private static void writeOneTable (PrintWriter document, Student person,
                                   String listName, int index) {
 
-        ArrayList<Student> matches = person.getMatchesForList(index);
+        List<Student> matches = person.getMatchesForList(index);
 
         document.println("\\subsection*{" + listName + "}");
         document.println("");

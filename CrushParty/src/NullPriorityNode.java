@@ -4,21 +4,13 @@
 public class NullPriorityNode extends PriorityNode {
 
     public NullPriorityNode() {
-        super();
-        setScore(0);
+        super(new NullStudent(), Integer.MAX_VALUE);
     }
 
-    public static PriorityNode initList(int len) {
+    public static PriorityNode initList() {
         PriorityNode start = new NullPriorityNode();
         start.setNext(start);
         start.setPrev(start);
-        /**
-        int i = len - 1;
-        while (i-- > 0) {
-            start = start.insert(new NullPriorityNode());
-        }
-        return start;
-         **/
         return start;
     }
 }
