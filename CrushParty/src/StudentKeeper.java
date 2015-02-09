@@ -10,6 +10,7 @@ public class StudentKeeper {
     private Double[][] scoreMatrix;
     private Map<Integer, Student> studentMap;
     private int nextStudentIndex = 0;
+    private static int wants = 0;
 
     public StudentKeeper() {
         studentMap = new HashMap<>();
@@ -47,6 +48,21 @@ public class StudentKeeper {
             student.prepareForPrinting();
             ResultsPrinter.printResults(student);
         }
+        PriorityNode topTimesMatched = NullPriorityNode.initList();
+        for (Student studentAfter : studentMap.values()) {
+            topTimesMatched = topTimesMatched.insert(new PriorityNode(studentAfter, studentAfter.getTimesMatched()));
+        }
+        PriorityNode next = topTimesMatched;
+        while (next != topTimesMatched.getPrev()) {
+            System.out.println(next.getStudent().getName() + ": " + next.getScore());
+            next = next.getNext();
+        }
+        System.out.println(wants);
     }
+
+    public static void wantsThird() {
+        wants++;
+    }
+
 
 }

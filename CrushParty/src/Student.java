@@ -18,6 +18,7 @@ public class Student {
     private List<Set<String>> outputActivityPreferences;
     private String email;
     private String netId;
+    private int timesMatched;
 
     /**
      * Array of priority queues representing matches.
@@ -49,6 +50,7 @@ public class Student {
      * @param studentInfo An string array representing a student's input into the Google form.
      */
     public Student(String[] studentInfo) {
+        this.timesMatched = 0;
         this.matches = new ArrayList<>();
         this.percentages = new ArrayList<>();
         this.listDescriptions = new ArrayList<>();
@@ -197,7 +199,7 @@ public class Student {
         while (!(head instanceof NullPriorityNode) && headCount < 10) {
             Student possible = head.getStudent();
             if (possible.isFeasible(acceptableGenders, requiredInterests, getGender())) {
-                topStudents.add(possible);
+                topStudents.add(possible.matched());
                 topPercentage.add(calcPercentage(head.getScore(), highScore));
                 headCount++;
             }
@@ -206,7 +208,7 @@ public class Student {
         while (!(tail instanceof NullPriorityNode) && tailCount < 10) {
             Student possible = tail.getStudent();
             if (possible.isFeasible(acceptableGenders, requiredInterests, getGender())) {
-                bottomStudents.add(possible);
+                bottomStudents.add(possible.matched());
                 bottomPercentage.add(calcPercentage(tail.getScore(), highScore));
                 tailCount++;
             }
@@ -266,6 +268,9 @@ public class Student {
         for (int i = 0; i < genders.length; i++) {
             outputGenderPreferences.add(i, processGenders(genders[i]));
             outputActivityPreferences.add(i, processInterests(activities[i]));
+            if (i == 2 && outputActivityPreferences.get(i).size() > 0) {
+                StudentKeeper.wantsThird();
+            }
         }
     }
 
@@ -346,5 +351,17 @@ public class Student {
         double score = (highScore - currScore) / highScore;
         return score;
     }
+
+    public int getTimesMatched() {
+        return timesMatched;
+    }
+
+    public Student matched() {
+        timesMatched++;
+        return this;
+    }
+
+
+
 
 }
