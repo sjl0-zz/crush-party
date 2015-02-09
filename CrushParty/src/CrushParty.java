@@ -39,14 +39,12 @@ public class CrushParty {
 
         try {
             surveyScanner = new BufferedReader(new FileReader(surveyFilename));
-            System.out.println("successfully made surveyScanner for " + surveyFilename);
         } catch (FileNotFoundException e) {
             throw new RuntimeException("File '"+surveyFilename+"' could not be opened.");
         }
 
         try {
             answerScanner = new BufferedReader(new FileReader(answersFilename));
-            System.out.println("successfully made answerScanner for " + answersFilename);
         } catch (FileNotFoundException e) {
             throw new RuntimeException("File '"+answersFilename+"' could not be opened.");
         }
@@ -95,13 +93,7 @@ public class CrushParty {
     }
 
     public static int answerScore(String answer) {
-        try {
-            return answerMap.get(answer);
-        } catch (Exception e) {
-            System.err.println(answerMap);
-            System.err.println(answer);
-            throw e;
-        }
+        return answerMap.get(answer);
     }
 
 }

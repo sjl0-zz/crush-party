@@ -72,6 +72,7 @@ public class Student {
         major = studentInfo[4];
         email = studentInfo[31];
         netId = email.split("@")[0];
+        name += " (" + netId + ")";
 
 //        System.out.println("    name = " + name);
 //        System.out.println("    gender = " + gender);
@@ -89,7 +90,6 @@ public class Student {
         interests.put(Gender.MALE, processInterests(studentInfo[25]));
         interests.put(Gender.NONBINARY, processInterests(studentInfo[2]));
         createOutputLists(new String[]{studentInfo[3], studentInfo[11], studentInfo[12]}, new String[]{studentInfo[27], studentInfo[28], studentInfo[29]}, new Boolean[]{checkBool(studentInfo[13]), checkBool(studentInfo[14]), false});
-        System.out.println(this);
     }
 
     // should be called 6 times (3 best 3 worst, in that order)
@@ -227,8 +227,8 @@ public class Student {
 
         String currListDescriptor = formatListDescriptor(acceptableGenders, requiredInterests);
 
-        listDescriptions.add("Best" + currListDescriptor);
-        listDescriptions.add("Worst" + currListDescriptor);
+        listDescriptions.add("Best " + currListDescriptor);
+        listDescriptions.add("Worst " + currListDescriptor);
         percentages.add(topPercentage);
         percentages.add(bottomPercentage);
 
@@ -248,16 +248,17 @@ public class Student {
      *          all of the required interests with the
      */
     public boolean isFeasible(Set<Gender> acceptableGenders, Set<String> requiredInterests, Gender potentialGender) {
-        return acceptableGenders.contains(this.gender) && this.interests.get(potentialGender).contains(requiredInterests);
+        return acceptableGenders.contains(this.gender) && this.interests.get(potentialGender).containsAll(requiredInterests);
     }
 
     public Set<String> processInterests(String interests) {
         Set<String> interestSet = new HashSet<>();
         String[] interestString = interests.split(",");
         for (String inter : interestString) {
-            interestSet.add(inter.trim());
+            if (!inter.equals("")) {
+                interestSet.add(inter.trim());
+            }
         }
-//        System.out.println(interestSet);
         return interestSet;
     }
 
@@ -265,10 +266,6 @@ public class Student {
         for (int i = 0; i < genders.length; i++) {
             outputGenderPreferences.add(i, processGenders(genders[i]));
             outputActivityPreferences.add(i, processInterests(activities[i]));
-
-            if (nextList[i] != null && !(nextList[i])) {
-                break;
-            }
         }
     }
 
@@ -283,7 +280,7 @@ public class Student {
 
     public Gender processGender(String genderIn) {
         if (genderIn.equals("")) {
-            return Gender.NONBINARY;
+            return Gender.OTHER;
         }
         Gender res;
         try {
@@ -304,22 +301,27 @@ public class Student {
     }
 
     public void prepareForPrinting() {
-        System.out.println();
         for (int i = 0; i < outputGenderPreferences.size(); i++) {
             Set<Gender> currGenderPref = outputGenderPreferences.get(i);
             Set<String> currActivityPref = outputActivityPreferences.get(i);
             matches.addAll(getTop10(currGenderPref, currActivityPref));
         }
-
     }
 
     public String formatListDescriptor(Set<Gender> acceptableGenders, Set<String> acceptableActivities) {
         String genderString = setToString(acceptableGenders);
         String activityString = setToString(acceptableActivities);
-        return genderString + " matches who would like to " + activityString + ".";
+        if (genderString.contains("other")) {
+            return "";
+        } else {
+            return genderString + " matches who would like to " + activityString + ".";
+        }
     }
 
     public String setToString(Set inSet) {
+        if (inSet.size() == 0) {
+            return "";
+        }
         String outputStr = "";
         int setSize = inSet.size();
         if (setSize > 1) {
@@ -341,7 +343,8 @@ public class Student {
         if (currScore > highScore) {
             return 0.0;
         }
-        return ((highScore - currScore) * 100.0) / highScore;
+        double score = (highScore - currScore) / highScore;
+        return score;
     }
 
 }

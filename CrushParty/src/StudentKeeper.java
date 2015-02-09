@@ -40,7 +40,6 @@ public class StudentKeeper {
                 scoreMatrix[j][i] = scoreIJ;
             }
         }
-        System.out.println();
     }
 
     public void output() {
