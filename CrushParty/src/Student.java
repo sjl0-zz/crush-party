@@ -7,6 +7,8 @@ import java.util.*;
 public class Student {
 
     private int idx;
+    private Random rand = new Random();
+
 
     private String name;
     private Gender gender;
@@ -311,6 +313,7 @@ public class Student {
             Set<String> currActivityPref = outputActivityPreferences.get(i);
             matches.addAll(getTop10(currGenderPref, currActivityPref));
         }
+        cleanNullLists();
     }
 
     public String formatListDescriptor(Set<Gender> acceptableGenders, Set<String> acceptableActivities) {
@@ -361,7 +364,107 @@ public class Student {
         return this;
     }
 
+    private void cleanNullLists() {
+        if (outputGenderPreferences.get(1).iterator().next().equals(Gender.OTHER)) {
+            double highScore = bestMatchesTail.getPrev().getScore();
+            int j = 0;
+            List<Student> first = new ArrayList<>();
+            List<Student> second = new ArrayList<>();
+            List<Double> firstPerc = new ArrayList<>();
+            List<Double> secPerc = new ArrayList<>();
+            while (j++ < 10) {
+                PriorityNode rand1 = new PriorityNode(this, 0);
+                PriorityNode rand2 = new PriorityNode(this, 0);
+                while (rand1.getStudent() == this && rand2.getStudent() == this) {
+                    rand1 = bestMatches.randomStudent(rand.nextInt(1225));
+                    rand2 = bestMatches.randomStudent(rand.nextInt(1225));
+                }
+                first.add(rand1.getStudent());
+                second.add(rand2.getStudent());
+                firstPerc.add(calcPercentage(rand1.getScore(), highScore));
+                secPerc.add(calcPercentage(rand2.getScore(), highScore));
 
+            }
+            matches.add(2, first);
+            matches.add(3, second);
+            percentages.add(2, firstPerc);
+            percentages.add(3, secPerc);
+            listDescriptions.add(2, "Here's some random crushes!");
+            listDescriptions.add(3, "More friends the merrier!");
+        }
+        if (outputGenderPreferences.get(2).iterator().next().equals(Gender.OTHER)) {
+            List<Student> topStudents = new ArrayList<>();
+            List<Student> bottomStudents = new ArrayList<>();
+            List<Double> topPercentage = new ArrayList<>();
+            List<Double> bottomPercentage = new ArrayList<>();
+            PriorityNode head = bestMatches;
+            int headCount = 0;
+            int tailCount = 0;
+            PriorityNode tail = bestMatchesTail.getPrev();
+            double highScore = tail.getScore();
 
+            while (!(head instanceof NullPriorityNode) && headCount < 10) {
+                Student possible = head.getStudent();
+                topStudents.add(possible.matched());
+                topPercentage.add(calcPercentage(head.getScore(), highScore));
+                headCount++;
+                head = head.next();
+            }
+            while (!(tail instanceof NullPriorityNode) && tailCount < 10) {
+                Student possible = tail.getStudent();
+                bottomStudents.add(possible.matched());
+                bottomPercentage.add(calcPercentage(tail.getScore(), highScore));
+                tailCount++;
+                tail = tail.getPrev();
+            }
+
+            while (headCount < 10) {
+                topStudents.add(new NullStudent());
+                topPercentage.add(0.0);
+                headCount++;
+            }
+
+            while (tailCount < 10) {
+                bottomStudents.add(new NullStudent());
+                bottomPercentage.add(0.0);
+                tailCount++;
+            }
+
+            matches.add(4, topStudents);
+            matches.add(5, bottomStudents);
+            percentages.add(4, topPercentage);
+            percentages.add(5, bottomPercentage);
+            listDescriptions.add(4, "Best Overall Matches");
+            listDescriptions.add(5, "Worst Overall Matches");
+        }
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCollege(String college) {
+        this.college = college;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    public Set<String> randomActivity() {
+        String[] activity = new String[]{"Chat", "Explore Houston", "Go out to eat", "Study party", "Drink", "Go to a campus party", "Jog the outer loop", "Netflix binge", "Play videogames"};
+        int randomNum = rand.nextInt(activity.length);
+        Set<String> ret = new HashSet<>();
+        ret.add(activity[randomNum]);
+        return ret;
+    }
 
 }

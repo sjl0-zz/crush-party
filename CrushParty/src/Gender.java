@@ -2,7 +2,8 @@ public enum Gender {
     MALE("Male"),
     FEMALE("Female"),
     NONBINARY("Non-Binary"),
-    OTHER("Other");
+    OTHER("Other"),
+    NOTHING("");
 
     private final String textRepresentation;
 

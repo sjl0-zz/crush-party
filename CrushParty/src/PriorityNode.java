@@ -1,7 +1,10 @@
+import java.util.Random;
+
 /**
  * Created by Seth on 2/2/15.
  */
 public class PriorityNode {
+    private Random rand = new Random();
     private Student student;
     private double score;
     private PriorityNode next;
@@ -77,5 +80,14 @@ public class PriorityNode {
 
     public void setPrev(PriorityNode prev) {
         this.prev = prev;
+    }
+
+    public PriorityNode randomStudent(int i) {
+
+        if (i <= 0) {
+            return this;
+        } else {
+            return next.randomStudent(--i);
+        }
     }
 }

@@ -46,13 +46,13 @@ public class ResultsPrinter {
         document.println("\\section*{Best Results}");
         document.println("");
         writeOneTable(document, person, "List 1", 0);
-        writeOneTable(document, person, "List 2", 1);
-        writeOneTable(document, person, "List 3", 2);
+        writeOneTable(document, person, "List 2", 2);
+        writeOneTable(document, person, "List 3", 4);
         document.println("\\newpage");
         document.println("\\section*{Worst Results}");
         document.println("");
-        writeOneTable(document, person, "List 1", 3);
-        writeOneTable(document, person, "List 2", 4);
+        writeOneTable(document, person, "List 1", 1);
+        writeOneTable(document, person, "List 2", 3);
         writeOneTable(document, person, "List 3", 5);
         document.println("\\end{document}");
 
@@ -75,9 +75,20 @@ public class ResultsPrinter {
         document.println("    \\hline");
         for (int i = 0; i < 10; i++) {
             Student match = matches.get(i);
+            String gen;
+            if (match.getGender() != null && match.getGender() == Gender.NOTHING) {
+                gen = "";
+            } else if (match.getGender() != null) {
+                String genA = match.getGender().toString().substring(0, 1);
+                String genB = match.getGender().toString().substring(1).toLowerCase();
+                gen = genA + genB;
+            } else {
+                gen = "";
+            }
+
             document.println("    " + i + ". " + match.getName() + " & "
-                    + person.getPercentagesForList(index).get(i) * 100 + "\\% & "
-                    + match.getGender() + " & " + match.getYear() + " & "
+                    + Math.round(person.getPercentagesForList(index).get(i) * 100) + "\\% & "
+                    + gen + " & " + match.getYear() + " & "
                     + match.getCollege() + " & " + match.getMajor() + " \\\\");
         }
         document.println("    \\hline");

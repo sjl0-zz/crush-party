@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by Seth on 1/24/15.
@@ -7,6 +8,7 @@ import java.util.Map;
  */
 public class StudentKeeper {
 
+    private Random rand = new Random();
     private Double[][] scoreMatrix;
     private Map<Integer, Student> studentMap;
     private int nextStudentIndex = 0;
